@@ -1,5 +1,5 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
-PORTNAME=		mudlet
+PORTNAME=		Mudlet
 DISTVERSION=	g20260509
 CATEGORIES=		games
 MASTER_SITES=	GH
@@ -29,7 +29,7 @@ USE_GITHUB=		yes
 GH_ACCOUNT=		Mudlet
 GH_PROJECT=		Mudlet
 GH_TAGNAME=		4e32ebc58d0abc58418f03145ef54b3b7b7093f8
-GH_TUPLE=		Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:3rdparty
+GH_TUPLE=		Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:3rdparty/edbee-lib
 
 # USES=cmake related variables ##--------------------------------------------------------------------------
 #
@@ -51,6 +51,7 @@ CONFLICTS=		Mudlet mudlet
 .include <bsd.port.options.mk>
 
 post-extract:
+	${MV} ${WRKDIR}/edbee-lib-a3ae51bbb82158366b3d5c4030a54981db688892/* ${WRKDIR}/${PORTNAME}-${GH_TAGNAME}/3rdparty/edbee-lib
 	${LOCALBASE}/bin/luarocks54 install luautf8
 	${LOCALBASE}/bin/luarocks54 install luafilesystem
 	${LOCALBASE}/bin/luarocks54 install lua-zip
