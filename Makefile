@@ -30,10 +30,10 @@ LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 				liblua-5.1.so:lang/lua51
 #				libyajl.so:devel/yajl \
 
-BUILD_DEPENDS=	lua54-luarocks>0:devel/lua-luarocks
+BUILD_DEPENDS=	lua54-luarocks>0:devel/lua-luarocks@lua54
 
 ### uses block ##------------------------------------------------------------------------------------------
-USES=			lua cmake:noninja gmake sqlite qt:6 desktop-file-utils gl
+USES=			lua:51 cmake:noninja gmake sqlite qt:6 desktop-file-utils gl
 
 GH_ACCOUNT= Mudlet
 GH_TAGNAME= 4e32ebc58d0abc58418f03145ef54b3b7b7093f8
@@ -63,17 +63,20 @@ CONFLICTS=		Mudlet mudlet
 #
 ### options helpers ##-------------------------------------------------------------------------------------
 #
-
 .include <bsd.port.options.mk>
 
-post-extract:
-	${LOCALBASE}/bin/luarocks54 install luautf8
-	${LOCALBASE}/bin/luarocks54 install luafilesystem
-	${LOCALBASE}/bin/luarocks54 install lua-zip
-	${LOCALBASE}/bin/luarocks54 install luasql-sqlite3
-	${LOCALBASE}/bin/luarocks54 install lrexlib-pcre2
-	${LOCALBASE}/bin/luarocks54 install lpeg
-	${LOCALBASE}/bin/luarocks54 install lua-yajl
+post-stage:
+	${MKDIR} ${STAGEDIR}${LOCALBASE}/share/lua/5.1/
+	cd ${STAGEDIR}${LOCALBASE} && ${LOCALBASE}/bin/luarocks54 --tree= --lua-version 5.1 install luautf8
+	cd ${STAGEDIR}${LOCALBASE} && ${LOCALBASE}/bin/luarocks54 --tree= --lua-version 5.1 install luafilesystem
+	cd ${STAGEDIR}${LOCALBASE} && ${LOCALBASE}/bin/luarocks54 --tree= --lua-version 5.1 install lua-zip
+	cd ${STAGEDIR}${LOCALBASE} && ${LOCALBASE}/bin/luarocks54 --tree= --lua-version 5.1 install luasql-sqlite3
+	cd ${STAGEDIR}${LOCALBASE} && ${LOCALBASE}/bin/luarocks54 --tree= --lua-version 5.1 install lrexlib-pcre2
+	cd ${STAGEDIR}${LOCALBASE} && ${LOCALBASE}/bin/luarocks54 --tree= --lua-version 5.1 install lpeg
+	cd ${STAGEDIR}${LOCALBASE} && ${LOCALBASE}/bin/luarocks54 --tree= --lua-version 5.1 install lua-yajl
+	cp -R /usr/local/share/lua/lib/lua/5.1/* /usr/local/lib/lua/5.1/
+
+# The above is definitely weird but I believe everything gets placed where it must for mudlet features to work.
 
 #----------------------------------------------------------------------
 
