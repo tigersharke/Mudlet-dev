@@ -17,9 +17,9 @@ LICENSE_FILE=	${WRKSRC}/COPYING
 
 # dependencies ##------------------------------------------------------------------------------------------
 LIB_DEPENDS=	libassimp.so:multimedia/assimp \
-				libqt6keychain.so:security/qtkeychain@qt6 \
 				libpugixml.so:textproc/pugixml \
 				libhunspell-1.7.so:textproc/hunspell \
+				libqt6keychain.so:security/qtkeychain@qt6 \
 				libpcre2-8.so:devel/pcre2 \
 				libzip.so:archivers/libzip \
 				libsysinfo.so:devel/libsysinfo \
@@ -39,27 +39,23 @@ BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54 \
 
 
 ### uses block ##------------------------------------------------------------------------------------------
-USES=			lua:51 cmake:noninja gmake sqlite qt:6 desktop-file-utils gl shebangfix
+USES=			lua:51 cmake:noninja gmake sqlite qt:6 desktop-file-utils gl shebangfix pkgconfig:build
 
 GH_ACCOUNT= Mudlet
 GH_TAGNAME=		f8f51c521dfb538c8aadecb980a6820c3d8232ac
 USE_GITHUB= nodefaults
 GH_TUPLE= \
-				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:fakedir1/3rdparty/edbee-lib \
-				martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:fakedir2/3rdparty/lcf \
-				julian-go:qt-tags-widget:26f177cbcebe66fdc3e8daed4d0984a7f60f3431:fakedir3/3rdparty/qt-tags-widget \
-				getsentry:sentry-native:c0e5f0705da3853ff548c7ece77d639a20e1d8f5:fakedir5/3rdparty/sentry-native \
-				Mudlet:dblsqd-sdk-qt:692697328a8312c951df12f07f8c8068d8ae24e7:fakedir4/3rdparty/dblsqd \
-				Mudlet:qt-ordered-map:ca2a31b7f8f982660b01d7dff6f6bc07eb0dcd34:fakedir6/3rdparty/qt-ordered-map
+				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:edbee_lib/3rdparty/edbee-lib \
+				martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
+				julian-go:qt-tags-widget:26f177cbcebe66fdc3e8daed4d0984a7f60f3431:qt_tags_widget/3rdparty/qt-tags-widget \
+				frankosterfeld:qtkeychain:e3b2e83f01cccadf9257c3143ae6a066b7d02149:qtkeychain/3rdparty/qtkeychain \
+				getsentry:sentry-native:c0e5f0705da3853ff548c7ece77d639a20e1d8f5:sentry_native/3rdparty/sentry-native
 
 USE_GL=			gl opengl glu
 USE_QT=			base 5compat multimedia tools speech
 
 # USES=cmake related variables ##--------------------------------------------------------------------------
 CMAKE_ARGS=     -DCMAKE_INSTALL_PREFIX="/usr/local"
-#				-DCMAKE_LIBRARY_PATH="/usr/loca/share" \
-#				-DCMAKE_SYSTEM_LIBRARY_PATH="/usr/loca/share" \
-#				-DLUA_INCLUDE_DIR="/usr/local/include/lua51"
 ### Make block ##------------------------------------------------------------------------------------------
 #
 ### conflicts ##-------------------------------------------------------------------------------------------
@@ -76,25 +72,6 @@ CONFLICTS=		Mudlet mudlet
 #
 .include <bsd.port.options.mk>
 
-#post-extract:
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lpeg
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luautf8
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lua-zip
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lrexlib-pcre2
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lua-yajl
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luafilesystem
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luasql-sqlite3
-
-#pre-stage:
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 remove lpeg
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 remove luautf8
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 remove lua-zip
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 remove lrexlib-pcre2
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 remove lua-yajl
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 remove luafilesystem
-#	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 remove luasql-sqlite3
-
-#pre-build:
 post-stage:
 	${MKDIR} ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lpeg
@@ -105,21 +82,9 @@ post-stage:
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luafilesystem
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luasql-sqlite3
 	${CP} -R ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/* ${LOCALBASE}/lib/lua/5.1/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/share/lua/5.1/luasql/sqlite3/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/share/lua/5.1/lpeg/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/share/lua/5.1/lfs/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/share/lua/5.1/yajl/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/share/lua/5.1/utf8/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/utf8/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/luasql/sqlite3/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/lpeg/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/lfs/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/yajl/
-#	${MKDIR} ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/brimworks/
-#	${CP} -R ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/brimworks/* ${LOCALBASE}/lib/lua/5.1/brimworks/
 
 # The above is definitely weird but I believe everything gets placed where it must for mudlet features to work._REFMODLIBDIR}/lfs.so
-# After more investigation, the above is used if there is no port for it, so I could avoid some luarocks.
+# After more investigation, the above is used if there is no port for it, so I could potentially avoid some luarocks.
 
 #----------------------------------------------------------------------
 
