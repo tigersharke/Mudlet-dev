@@ -1,4 +1,4 @@
-TIMESTAMP = 1779346166
+TIMESTAMP = 1779349330
 SHA256 (Mudlet-dev/Mudlet-Mudlet-g20260520-34a3f7271c4ec1f684f842313ff37d21491b3b13_GH0.tar.gz) = 2cbd42bf7fcf41c2db91638bfbe8e33a0dab2eba31d1285f1147a4a8437c84c2
 SIZE (Mudlet-dev/Mudlet-Mudlet-g20260520-34a3f7271c4ec1f684f842313ff37d21491b3b13_GH0.tar.gz) = 48263955
 SHA256 (Mudlet-dev/Mudlet-edbee-lib-a3ae51bbb82158366b3d5c4030a54981db688892_GH0.tar.gz) = 2bb07eaeb37b683ea2998f3d5cfedae8f95e0779431b98b5a038402e258fb3f0
@@ -7,5 +7,7 @@ SHA256 (Mudlet-dev/martin-eden-lua_code_formatter-4aa25029eae867840e6c06c7b075f4
 SIZE (Mudlet-dev/martin-eden-lua_code_formatter-4aa25029eae867840e6c06c7b075f4b690dd2ec2_GH0.tar.gz) = 55738
 SHA256 (Mudlet-dev/julian-go-qt-tags-widget-26f177cbcebe66fdc3e8daed4d0984a7f60f3431_GH0.tar.gz) = ed6f7b46f5857c3b6cd54224093e34bf4b8943a1b202ae222236fc5a38be2bea
 SIZE (Mudlet-dev/julian-go-qt-tags-widget-26f177cbcebe66fdc3e8daed4d0984a7f60f3431_GH0.tar.gz) = 86377
+SHA256 (Mudlet-dev/frankosterfeld-qtkeychain-e3b2e83f01cccadf9257c3143ae6a066b7d02149_GH0.tar.gz) = 94df8dbe70247c4e0e071a1fc8575592d1825c71d5741776814dc92abe81d9db
+SIZE (Mudlet-dev/frankosterfeld-qtkeychain-e3b2e83f01cccadf9257c3143ae6a066b7d02149_GH0.tar.gz) = 68655
 SHA256 (Mudlet-dev/getsentry-sentry-native-c0e5f0705da3853ff548c7ece77d639a20e1d8f5_GH0.tar.gz) = 6e04cc9a3d8dad88414266135c9c0cfb9782a3ce68264c70fce219d58ec14fef
 SIZE (Mudlet-dev/getsentry-sentry-native-c0e5f0705da3853ff548c7ece77d639a20e1d8f5_GH0.tar.gz) = 1278450
