@@ -1,0 +1,11 @@
+--- translations/translated/CMakeLists.txt.orig	2026-05-25 09:08:22 UTC
++++ translations/translated/CMakeLists.txt
+@@ -37,7 +37,7 @@ foreach(ts_file ${TS_FILES_NOEXT})
+           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+           COMMAND ${LRELEASE_LOCATION} ${ts_file}.ts -compress -qm ${qm_file}.qm
+           OUTPUT_VARIABLE "lrelease_output")
+-#  message(STATUS ${lrelease_output})
++  message(STATUS ${lrelease_output})
+   file(APPEND "${CMAKE_CURRENT_SOURCE_DIR}/lrelease_output.txt" ${lrelease_output})
+ endforeach()
+ 

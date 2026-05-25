@@ -32,10 +32,11 @@ LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 
 BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54 \
 				${LOCALBASE}/lib/lua/5.1/bit.so:devel/lua-bitop@lua51 \
-				${LOCALBASE}/share/hunspell/en_US.aff:textproc/en-hunspell 
+				${LOCALBASE}/share/hunspell/en_US.aff:textproc/en-hunspell \
+				${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools
 
 ### uses block ##------------------------------------------------------------------------------------------
-USES=			lua:51 cmake:noninja gmake sqlite qt:6 desktop-file-utils gl shebangfix pkgconfig:build
+USES=			lua:51 cmake ninja sqlite qt:6 desktop-file-utils gl
 
 GH_ACCOUNT=		Mudlet
 GH_TAGNAME=		34a3f7271c4ec1f684f842313ff37d21491b3b13
@@ -51,9 +52,14 @@ USE_GL=			gl opengl glu
 USE_QT=			base 5compat multimedia tools speech
 
 # USES=cmake related variables ##--------------------------------------------------------------------------
-CMAKE_ARGS=     -DCMAKE_INSTALL_PREFIX="/usr/local"
+CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="/usr/local" \
+				-DCMAKE_AUTORCC="ON" 
 ### Make block ##------------------------------------------------------------------------------------------
-#
+CONFIGURE_ENV=	WITH_OWN_QTKEYCHAIN=NO \
+				WITH_UPDATER=NO \
+				WITH_VARIABLE_SPLASH_SCREEN=NO \
+				XDG_DATA_DIRS=/usr/share \
+				CFLAGS="$CFLAGS -std=gnu17"
 ### conflicts ##-------------------------------------------------------------------------------------------
 CONFLICTS=		Mudlet mudlet
 ### wrksrc block ##----------------------------------------------------------------------------------------
@@ -68,8 +74,39 @@ CONFLICTS=		Mudlet mudlet
 #
 .include <bsd.port.options.mk>
 
+post-extract:
+	${LOCALBASE}/bin/luarocks54 --tree=${LOCALBASE} --lua-version 5.1 install lua-yajl
+	${LOCALBASE}/bin/luarocks54 --tree=${LOCALBASE} --lua-version 5.1 install lpeg
+	${LOCALBASE}/bin/luarocks54 --tree=${LOCALBASE} --lua-version 5.1 install luautf8
+	${LOCALBASE}/bin/luarocks54 --tree=${LOCALBASE} --lua-version 5.1 install lua-zip
+	${LOCALBASE}/bin/luarocks54 --tree=${LOCALBASE} --lua-version 5.1 install lrexlib-pcre2
+	${LOCALBASE}/bin/luarocks54 --tree=${LOCALBASE} --lua-version 5.1 install luafilesystem
+	${LOCALBASE}/bin/luarocks54 --tree=${LOCALBASE} --lua-version 5.1 install luasql-sqlite3
+
+post-build:
+	@${ECHO_MSG} "==> Forcing translation resource rebuild..."
+	@${RM} -f ${WRKDIR}/.build/translations/translated/*.qm \
+		${WRKDIR}/.build/translations/translated/qm.qrc
+	@${RM} -rf ${WRKDIR}/.build/src/CMakeFiles/mudlet_core.dir \
+		${WRKDIR}/.build/src/libmudlet_core.a
+	@${SETENV} ${CONFIGURE_ENV} ${CMAKE_BIN} -S${WRKSRC} -B${WRKDIR}/.build ${CMAKE_ARGS}
+	@${MAKE_CMD} -C ${WRKDIR}/.build mudlet_core
+	@${MAKE_CMD} -C ${WRKDIR}/.build mudlet
+
 post-stage:
-	${MKDIR} ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/
+	@${ECHO_MSG} "==> Installing Mudlet Lua framework (with patches)..."
+	@${MKDIR} ${STAGEDIR}${PREFIX}/share/mudlet/lua
+	@${MKDIR} ${STAGEDIR}${PREFIX}/share/mudlet/lua/geyser
+	@${MKDIR} ${STAGEDIR}${PREFIX}/share/mudlet/translations
+# Force copy of all Lua files from the build tree
+	@${CP} -Rp ${WRKDIR}/.build/src/mudlet-lua/lua/* \
+		${STAGEDIR}${PREFIX}/share/mudlet/lua/ 2>/dev/null || true
+# Loose .qm files (important fallback)
+	@${CP} -p ${WRKDIR}/.build/translations/translated/*.qm \
+		${STAGEDIR}${PREFIX}/share/mudlet/translations/ 2>/dev/null || true
+	@${ECHO_MSG} "Installed Lua files and translations"
+	@${LS} ${STAGEDIR}${PREFIX}/share/mudlet/lua/Other.lua ${STAGEDIR}${PREFIX}/share/mudlet/lua/geyser/GeyserAdjustableContainer.lua 2>/dev/null || true
+	@${LS} ${STAGEDIR}${PREFIX}/share/mudlet/translations/ | ${HEAD} -10
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lpeg
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luautf8
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lua-zip
@@ -78,12 +115,13 @@ post-stage:
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luafilesystem
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luasql-sqlite3
 	${CP} -R ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/* ${LOCALBASE}/lib/lua/5.1/
+# The .qm files themselves do NOT go into ${STAGEDIR} (they are embedded)
+# Optional: Verify embedding
+	@${ECHO_MSG} "Checking embedded translations..."
+	@strings ${STAGEDIR}${PREFIX}/bin/mudlet 2>/dev/null | ${GREP} -E ':/lang/mudlet_.*\.qm' \
+	|| ${ECHO_MSG} "WARNING: No embedded .qm resources found!"
 
-# The above is definitely weird but I believe everything gets placed where it must for mudlet features to work._REFMODLIBDIR}/lfs.so
-# After more investigation, the above is used if there is no port for it, so I am avoiding some luarocks.
-
-# A mudlet error in lua that says 'locale' has nothing to do with system locale like LC_ALL for localization language choice.
-# The possible lua error of a variable being nil is a syntax error which has lua code methods to avoid.
+# It took 8-12 hours of effort with repeated building testing and modifying, with help from Grok to cure the UI problem.
 
 #----------------------------------------------------------------------
 
