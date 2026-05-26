@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=		Mudlet
-DISTVERSION=	g20260520
+DISTVERSION=	g20260525
 CATEGORIES=		games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -39,7 +39,7 @@ BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54 \
 USES=			lua:51 cmake ninja sqlite qt:6 desktop-file-utils gl
 
 GH_ACCOUNT=		Mudlet
-GH_TAGNAME=		34a3f7271c4ec1f684f842313ff37d21491b3b13
+GH_TAGNAME=		23c3c55baa61b7f64006d5bb95ea623cf94640bb
 USE_GITHUB=		nodefaults
 GH_TUPLE= \
 				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:edbee_lib/3rdparty/edbee-lib \
