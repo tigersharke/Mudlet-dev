@@ -24,9 +24,6 @@ LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 				libzip.so:archivers/libzip \
 				libsysinfo.so:devel/libsysinfo \
 				libonig.so:devel/oniguruma \
-				libzstd.so:archivers/zstd \
-				libcurl.so:ftp/curl \
-				libboost_thread.so:devel/boost-libs \
 				liblua-5.1.so:lang/lua51 \
 				libyajl.so:devel/yajl
 
@@ -34,9 +31,14 @@ BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54 \
 				${LOCALBASE}/lib/lua/5.1/bit.so:devel/lua-bitop@lua51 \
 				${LOCALBASE}/share/hunspell/en_US.aff:textproc/en-hunspell \
 				${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools
+RUN_DEPENDS=	curl:ftp/curl \
+				zstd:archivers/zstd \
+				${LOCALBASE}/lib/libboost_atomic.so:devel/boost-libs
 
 ### uses block ##------------------------------------------------------------------------------------------
-USES=			lua:51 cmake ninja sqlite qt:6 desktop-file-utils gl
+#USES=			lua:51 cmake:outsource ninja sqlite qt:6 desktop-file-utils gl
+#USES=			lua:51 cmake:noninja gmake sqlite qt:6 desktop-file-utils gl
+USES=			lua:51 cmake sqlite qt:6 desktop-file-utils gl
 
 GH_ACCOUNT=		Mudlet
 GH_TAGNAME=		b2cc6e1e11cd709884625304481400448aa49be3
@@ -48,12 +50,16 @@ GH_TUPLE= \
 				frankosterfeld:qtkeychain:e3b2e83f01cccadf9257c3143ae6a066b7d02149:qtkeychain/3rdparty/qtkeychain \
 				getsentry:sentry-native:c0e5f0705da3853ff548c7ece77d639a20e1d8f5:sentry_native/3rdparty/sentry-native
 
-USE_GL=			gl opengl glu
+#USE_GL=			gl opengl glu
+USE_GL=			opengl glu
 USE_QT=			base 5compat multimedia tools speech
 
 # USES=cmake related variables ##--------------------------------------------------------------------------
 CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="/usr/local" \
-				-DCMAKE_AUTORCC="ON" 
+				-DCMAKE_AUTORCC=ON \
+				-DCMAKE_AUTOMOC=OFF \
+				-DCMAKE_AUTOUIC=ON \
+				-DCMAKE_OUTSOURCE=OFF
 ### Make block ##------------------------------------------------------------------------------------------
 CONFIGURE_ENV=	WITH_OWN_QTKEYCHAIN=NO \
 				WITH_UPDATER=NO \
@@ -83,7 +89,7 @@ post-extract:
 	${LOCALBASE}/bin/luarocks54 --tree=${LOCALBASE} --lua-version 5.1 install luafilesystem
 	${LOCALBASE}/bin/luarocks54 --tree=${LOCALBASE} --lua-version 5.1 install luasql-sqlite3
 
-post-build:
+#post-build:
 	@${ECHO_MSG} "==> Forcing translation resource rebuild..."
 	@${RM} -f ${WRKDIR}/.build/translations/translated/*.qm \
 		${WRKDIR}/.build/translations/translated/qm.qrc
@@ -105,7 +111,8 @@ post-stage:
 	@${CP} -p ${WRKDIR}/.build/translations/translated/*.qm \
 		${STAGEDIR}${PREFIX}/share/mudlet/translations/ 2>/dev/null || true
 	@${ECHO_MSG} "Installed Lua files and translations"
-	@${LS} ${STAGEDIR}${PREFIX}/share/mudlet/lua/Other.lua ${STAGEDIR}${PREFIX}/share/mudlet/lua/geyser/GeyserAdjustableContainer.lua 2>/dev/null || true
+	@${LS} ${STAGEDIR}${PREFIX}/share/mudlet/lua/Other.lua \
+		${STAGEDIR}${PREFIX}/share/mudlet/lua/geyser/GeyserAdjustableContainer.lua 2>/dev/null || true
 	@${LS} ${STAGEDIR}${PREFIX}/share/mudlet/translations/ | ${HEAD} -10
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lpeg
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luautf8
