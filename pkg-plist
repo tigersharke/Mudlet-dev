@@ -406,29 +406,5 @@ share/mudlet/tests/TableUtils_spec.lua
 share/mudlet/tests/TextEdit_spec.lua
 share/mudlet/tests/Trigger_spec.lua
 share/mudlet/tests/UI_spec.lua
-share/mudlet/translations/mudlet_ar_EG.qm
-share/mudlet/translations/mudlet_ar_SA.qm
-share/mudlet/translations/mudlet_de_DE.qm
-share/mudlet/translations/mudlet_el_GR.qm
-share/mudlet/translations/mudlet_en_GB.qm
-share/mudlet/translations/mudlet_en_PT.qm
-share/mudlet/translations/mudlet_en_US.qm
-share/mudlet/translations/mudlet_en_XY.qm
-share/mudlet/translations/mudlet_es_ES.qm
-share/mudlet/translations/mudlet_fi_FI.qm
-share/mudlet/translations/mudlet_fr_FR.qm
-share/mudlet/translations/mudlet_he_IL.qm
-share/mudlet/translations/mudlet_it_IT.qm
-share/mudlet/translations/mudlet_ko_KR.qm
-share/mudlet/translations/mudlet_nl_NL.qm
-share/mudlet/translations/mudlet_pl_PL.qm
-share/mudlet/translations/mudlet_pt_BR.qm
-share/mudlet/translations/mudlet_pt_PT.qm
-share/mudlet/translations/mudlet_ru_RU.qm
-share/mudlet/translations/mudlet_sv_SE.qm
-share/mudlet/translations/mudlet_tr_TR.qm
-share/mudlet/translations/mudlet_yd_YD.qm
-share/mudlet/translations/mudlet_zh_CN.qm
-share/mudlet/translations/mudlet_zh_TW.qm
 @dir share/mudlet/lua/gui-drop
 @dir share/mudlet/lua/stressinator
