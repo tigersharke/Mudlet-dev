@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=		Mudlet
-DISTVERSION=	g20260615
+DISTVERSION=	g20260620
 CATEGORIES=		games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -16,6 +16,11 @@ LICENSE=		GPLv2+
 LICENSE_FILE=	${WRKSRC}/COPYING
 
 # dependencies ##------------------------------------------------------------------------------------------
+BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54 \
+				${LOCALBASE}/lib/lua/5.1/bit.so:devel/lua-bitop@lua51 \
+				${LOCALBASE}/share/hunspell/en_US.aff:textproc/en-hunspell \
+				${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools
+
 LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 				libqt6keychain.so:security/qtkeychain@qt6 \
 				libpugixml.so:textproc/pugixml \
@@ -27,38 +32,32 @@ LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 				libyajl.so:devel/yajl
 #				libonig.so:devel/oniguruma \
 
-BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54 \
-				${LOCALBASE}/lib/lua/5.1/bit.so:devel/lua-bitop@lua51 \
-				${LOCALBASE}/share/hunspell/en_US.aff:textproc/en-hunspell \
-				${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools
 RUN_DEPENDS=	curl:ftp/curl \
 				zstd:archivers/zstd \
 				${LOCALBASE}/lib/libboost_atomic.so:devel/boost-libs
 
 ### uses block ##------------------------------------------------------------------------------------------
-#USES=			lua:51 cmake:outsource ninja sqlite qt:6 desktop-file-utils gl
-#USES=			lua:51 cmake:noninja gmake sqlite qt:6 desktop-file-utils gl
 USES=			lua:51 cmake sqlite qt:6 desktop-file-utils gl pkgconfig
 
-GH_ACCOUNT=		Mudlet
-GH_TAGNAME=		2b9c8f101f0814e6b026d11578713b54641d4430
 USE_GITHUB=		nodefaults
+GH_ACCOUNT=		Mudlet
+GH_TAGNAME=		21326da4d53b6489a4029f3c5ac9b008b67d1e23
 GH_TUPLE= \
 				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:edbee_lib/3rdparty/edbee-lib \
 				martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
 				julian-go:qt-tags-widget:26f177cbcebe66fdc3e8daed4d0984a7f60f3431:qt_tags_widget/3rdparty/qt-tags-widget \
 				getsentry:sentry-native:42ca73a6c7a8f6638db12ef587ef0ac6fe67d21e:sentry_native/3rdparty/sentry-native
+#
 # It seems to work with the LIB_DEPENDS for security/qtkeychain@qt6 instead of this version:
 #				frankosterfeld:qtkeychain:e3b2e83f01cccadf9257c3143ae6a066b7d02149:qtkeychain/3rdparty/qtkeychain \
 # My test item
 #				lloyd:yajl:5e3a7856e643b4d6410ddc3f84bc2f38174f2872:yajl/3rdparty/yajl \
-
-#USE_GL=			gl opengl glu
+#
 USE_GL=			opengl glu
 USE_QT=			base 5compat multimedia tools speech
 
 # USES=cmake related variables ##--------------------------------------------------------------------------
-CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="/usr/local" \
+CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="${LOCALBASE}" \
 				-DCMAKE_AUTORCC=ON \
 				-DCMAKE_AUTOMOC=OFF \
 				-DCMAKE_AUTOUIC=OFF \
@@ -66,9 +65,8 @@ CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="/usr/local" \
 ### Make block ##------------------------------------------------------------------------------------------
 CONFIGURE_ENV=	WITH_OWN_QTKEYCHAIN=NO \
 				WITH_UPDATER=NO \
-				WITH_VARIABLE_SPLASH_SCREEN=NO \
 				XDG_DATA_DIRS=/usr/share \
-				CFLAGS="$CFLAGS -std=gnu17"
+				CFLAGS+="$CFLAGS -std=gnu17"
 ### conflicts ##-------------------------------------------------------------------------------------------
 CONFLICTS=		Mudlet mudlet
 ### wrksrc block ##----------------------------------------------------------------------------------------
@@ -76,10 +74,36 @@ CONFLICTS=		Mudlet mudlet
 ### packaging list block ##--------------------------------------------------------------------------------
 #
 ### options definitions ##---------------------------------------------------------------------------------
+OPTIONS_DEFINE= SENTRY_DEBUG 3D_MAPPER FONTS MEM_TRACK HOT_RELOAD VAR_SPLASH SENTRY STATIC_ANALYSIS \
+				SKIP_INSTALL_RPATH SKIP_RPATH
+OPTIONS_DEFAULT=FONTS 3D_MAPPER VAR_SPLASH
+
 #
 ### options descriptions ##--------------------------------------------------------------------------------
+SENTRY_DEBUG_DESC=			Send debug files to Sentry after build
+3D_MAPPER_DESC=				Include optional 3D mapper
+FONTS_DESC=					Include optional fonts
+MEM_TRACK_DESC=				Include optional memory tracking
+HOT_RELOAD_DESC=			Include optional shader hot-reloading
+VAR_SPLASH_DESC=			Include optional build-type splash screen
+SENTRY_DESC=				Enable crash reporting via Sentry (token needed)
+STATIC_ANALYSIS_DESC=		Enable static analysis with clang-tidy and cppcheck
+SKIP_INSTALL_RPATH_DESC=	runtime paths are not added when installing shared libraries, but are added when building
+SKIP_RPATH_DESC=			runtime paths are not added when using shared libraries
+
 #
 ### options helpers ##-------------------------------------------------------------------------------------
+SENTRY_DEBUG_CMAKE_BOOL=		SENTRY_SEND_DEBUG
+3D_MAPPER_CMAKE_BOOL=			USE_3DMAPPER
+FONTS_CMAKE_BOOL=				USE_FONTS
+MEM_TRACK_CMAKE_BOOL=			USE_MEMORY_TRACKING
+HOT_RELOAD_CMAKE_BOOL=			USE_SHADER_HOT_RELOAD
+VAR_SPLASH_CMAKE_BOOL=			USE_VARIABLE_SPLASH_SCREEN
+SENTRY_CMAKE_BOOL= 				WITH_SENTRY
+STATIC_ANALYSIS_CMAKE_BOOL=		ENABLE_STATIC_ANALYSIS
+SKIP_INSTALL_RPATH_CMAKE_BOOL=	CMAKE_SKIP_INSTALL_RPATH
+SKIP_RPATH_CMAKE_BOOL=			CMAKE_SKIP_RPATH
+
 #
 .include <bsd.port.options.mk>
 
