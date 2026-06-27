@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=		Mudlet
-DISTVERSION=	g20260622
+DISTVERSION=	g20260626
 CATEGORIES=		games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -41,13 +41,11 @@ USES=			lua:51 cmake sqlite qt:6 desktop-file-utils gl pkgconfig
 
 USE_GITHUB=		nodefaults
 GH_ACCOUNT=		Mudlet
-GH_TAGNAME=		48a6d9e18452cef8fad297da5851fa0d46221990
+GH_TAGNAME=		84751258ffff39a2f9c2b1decf2ab0f5bf4fc42a
 GH_TUPLE= \
 				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:edbee_lib/3rdparty/edbee-lib \
 				martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
 				julian-go:qt-tags-widget:26f177cbcebe66fdc3e8daed4d0984a7f60f3431:qt_tags_widget/3rdparty/qt-tags-widget
-#
-#				getsentry:sentry-native:ae55c1bc2f828da06b4a88f5d6b23a49e3f45a22:sentry_native/3rdparty/sentry-native
 #
 # It seems to work with the LIB_DEPENDS for security/qtkeychain@qt6 instead of this version:
 #				frankosterfeld:qtkeychain:7718d0ac928f1eb46caf2fc9a08ffd7ae2a87ae5:qtkeychain/3rdparty/qtkeychain \
@@ -69,7 +67,7 @@ CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="${LOCALBASE}" \
 # /usr/local/bin/clang-tidy19
 # /usr/local/llvm19/bin/clang-tidy
 ### Make block ##------------------------------------------------------------------------------------------
-CONFIGURE_ENV=	CFLAGS+="$CFLAGS -std=gnu17"
+#CONFIGURE_ENV=	CFLAGS+="$CFLAGS -std=gnu17"
 
 # conflicts ##-------------------------------------------------------------------------------------------
 CONFLICTS=		Mudlet mudlet
