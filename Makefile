@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=		Mudlet
-DISTVERSION=	g20260627
+DISTVERSION=	g20260702
 CATEGORIES=		games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -43,7 +43,7 @@ USES=			lua:51 cmake sqlite qt:6 desktop-file-utils gl pkgconfig
 
 USE_GITHUB=		nodefaults
 GH_ACCOUNT=		Mudlet
-GH_TAGNAME=		70c14b9ba9f1593015da0c5f156be5219a9567f0
+GH_TAGNAME=		e93c9c38ddfabc6e4b245b35815ea53400e47ee9
 GH_TUPLE= \
 				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:edbee_lib/3rdparty/edbee-lib \
 				martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
