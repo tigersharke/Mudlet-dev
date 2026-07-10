@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=		Mudlet
-DISTVERSION=	g20260626
+DISTVERSION=	g20260627
 CATEGORIES=		games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -15,22 +15,24 @@ WWW=			https://mudlet.org/
 LICENSE=		GPLv2+
 LICENSE_FILE=	${WRKSRC}/COPYING
 
+# lua-luarocks option for luajit will break the dependency here.
 # dependencies ##------------------------------------------------------------------------------------------
-BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54 \
+BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54\
 				${LOCALBASE}/lib/lua/5.1/bit.so:devel/lua-bitop@lua51 \
 				${LOCALBASE}/share/hunspell/en_US.aff:textproc/en-hunspell \
-				${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools
+				${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools 
+#				${LOCALBASE}/lib/cmake/Qt6Keychain/Qt6KeychainConfig.cmake:security/qtkeychain@qt6
 
 LIB_DEPENDS=	libassimp.so:multimedia/assimp \
-				libqt6keychain.so:security/qtkeychain@qt6 \
+				libqt6keychain.so:security/qtkeychain \
 				libpugixml.so:textproc/pugixml \
 				libhunspell-1.7.so:textproc/hunspell \
 				libpcre2-8.so:devel/pcre2 \
 				libzip.so:archivers/libzip \
+				libminizip.so:archivers/minizip \
 				libsysinfo.so:devel/libsysinfo \
 				liblua-5.1.so:lang/lua51 \
 				libyajl.so:devel/yajl
-#				libonig.so:devel/oniguruma \
 
 RUN_DEPENDS=	curl:ftp/curl \
 				zstd:archivers/zstd \
@@ -41,7 +43,7 @@ USES=			lua:51 cmake sqlite qt:6 desktop-file-utils gl pkgconfig
 
 USE_GITHUB=		nodefaults
 GH_ACCOUNT=		Mudlet
-GH_TAGNAME=		84751258ffff39a2f9c2b1decf2ab0f5bf4fc42a
+GH_TAGNAME=		70c14b9ba9f1593015da0c5f156be5219a9567f0
 GH_TUPLE= \
 				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:edbee_lib/3rdparty/edbee-lib \
 				martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
@@ -57,9 +59,11 @@ USE_QT=			base 5compat multimedia tools speech
 
 # USES=cmake related variables ##--------------------------------------------------------------------------
 CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="${LOCALBASE}" \
+				-DQt6Keychain_DIR=${LOCALBASE}/lib/cmake/Qt6Keychain \
 				-DCMAKE_AUTORCC=ON \
 				-DCMAKE_AUTOMOC=OFF \
 				-DCMAKE_AUTOUIC=OFF \
+				-DQT_DEBUG_FIND_PACKAGE=ON \
 				-DCMAKE_OUTSOURCE=OFF
 
 # //Path to a program.
@@ -120,7 +124,8 @@ CMAKE_ARGS+= -DCLANG_TIDY_EXE="${LOCALBASE}/llvm${LLVM_DEFAULT}/bin/clang-tidy"
 .endif
 
 #
-post-extract:
+#post-extract:
+pre-build:
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lpeg
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luautf8
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install lua-zip
@@ -129,7 +134,6 @@ post-extract:
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luafilesystem
 	${LOCALBASE}/bin/luarocks54 --tree=${STAGEDIR}${LOCALBASE} --lua-version 5.1 install luasql-sqlite3
 	${CP} -R ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/* ${LOCALBASE}/lib/lua/5.1/
-
 
 #post-build:
 #	@${ECHO_MSG} "==> Forcing translation resource rebuild..."
