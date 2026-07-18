@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=		Mudlet
-DISTVERSION=	g20260712
+DISTVERSION=	g20260713
 CATEGORIES=		games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -21,7 +21,6 @@ BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54\
 				${LOCALBASE}/lib/lua/5.1/bit.so:devel/lua-bitop@lua51 \
 				${LOCALBASE}/share/hunspell/en_US.aff:textproc/en-hunspell \
 				${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools 
-#				${LOCALBASE}/lib/cmake/Qt6Keychain/Qt6KeychainConfig.cmake:security/qtkeychain@qt6
 
 LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 				libqt6keychain.so:security/qtkeychain \
@@ -39,22 +38,17 @@ RUN_DEPENDS=	curl:ftp/curl \
 				${LOCALBASE}/lib/libboost_atomic.so:devel/boost-libs
 
 ### uses block ##------------------------------------------------------------------------------------------
-USES=			lua:51 cmake sqlite qt:6 desktop-file-utils gl pkgconfig
+USES=			lua:51 cmake:noninja gmake sqlite qt:6 desktop-file-utils gl pkgconfig
 
 USE_GITHUB=		nodefaults
 GH_ACCOUNT=		Mudlet
-GH_TAGNAME=		9451d4918c18dd0df64755ad96d99c34d264e798
+GH_TAGNAME=		f5e364b2d40c8cebd0359fe078b429b7af65e3c0
 GH_TUPLE= \
 				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:edbee_lib/3rdparty/edbee-lib \
 				martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
 				julian-go:qt-tags-widget:26f177cbcebe66fdc3e8daed4d0984a7f60f3431:qt_tags_widget/3rdparty/qt-tags-widget
-#
-# It seems to work with the LIB_DEPENDS for security/qtkeychain@qt6 instead of this version:
-#				frankosterfeld:qtkeychain:7718d0ac928f1eb46caf2fc9a08ffd7ae2a87ae5:qtkeychain/3rdparty/qtkeychain \
-# My test item
-#				lloyd:yajl:5e3a7856e643b4d6410ddc3f84bc2f38174f2872:yajl/3rdparty/yajl \
-#
-USE_GL=			opengl glu
+ 
+USE_GL=			gl opengl glu
 USE_QT=			base 5compat multimedia tools speech
 
 # USES=cmake related variables ##--------------------------------------------------------------------------
@@ -66,15 +60,11 @@ CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="${LOCALBASE}" \
 				-DQT_DEBUG_FIND_PACKAGE=ON \
 				-DCMAKE_OUTSOURCE=OFF
 
-# //Path to a program.
-# CLANG_TIDY_EXE:FILEPATH=CLANG_TIDY_EXE-NOTFOUND
-# /usr/local/bin/clang-tidy19
-# /usr/local/llvm19/bin/clang-tidy
 ### Make block ##------------------------------------------------------------------------------------------
-#CONFIGURE_ENV=	CFLAGS+="$CFLAGS -std=gnu17"
-
+#
 # conflicts ##-------------------------------------------------------------------------------------------
 CONFLICTS=		Mudlet mudlet
+#
 ### wrksrc block ##----------------------------------------------------------------------------------------
 #
 ### packaging list block ##--------------------------------------------------------------------------------
