@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=		Mudlet
-DISTVERSION=	g20260721
+DISTVERSION=	g20260724
 CATEGORIES=		games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -42,7 +42,7 @@ USES=			lua:51 cmake:noninja gmake sqlite qt:6 desktop-file-utils gl pkgconfig
 
 USE_GITHUB=		nodefaults
 GH_ACCOUNT=		Mudlet
-GH_TAGNAME=		b670b4de6100830e5cd011a793c8bcbc741622ea
+GH_TAGNAME=		9a44a008f20797d8ee6ee3166ea09c74cf5d52ab
 GH_TUPLE= \
 				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:edbee_lib/3rdparty/edbee-lib \
 				martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
@@ -58,6 +58,8 @@ CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="${LOCALBASE}" \
 				-DCMAKE_AUTOMOC=OFF \
 				-DCMAKE_AUTOUIC=OFF \
 				-DQT_DEBUG_FIND_PACKAGE=ON \
+				-DCMAKE_BUILD_TYPE=DEBUG \
+				--debug-output \
 				-DCMAKE_OUTSOURCE=OFF
 
 ### Make block ##------------------------------------------------------------------------------------------
@@ -105,7 +107,7 @@ SENTRY_DEBUG_IMPLIES=					SENTRY
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MSENTRY}
-GH_TUPLE+=getsentry:sentry-native:ae55c1bc2f828da06b4a88f5d6b23a49e3f45a22:sentry_native/3rdparty/sentry-native
+GH_TUPLE+=getsentry:sentry-native:a1827544e2da7e50517615003288c25380f8d457:sentry_native/3rdparty/sentry-native
 .endif
 
 .if ${PORT_OPTIONS:MSTATIC_ANALYSIS}
