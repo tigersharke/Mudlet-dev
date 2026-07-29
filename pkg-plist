@@ -82,6 +82,7 @@ share/mudlet/lua/Other.lua
 share/mudlet/lua/StringUtils.lua
 share/mudlet/lua/TTSValues.lua
 share/mudlet/lua/TableUtils.lua
+share/mudlet/lua/base-ui/config.lua
 share/mudlet/lua/enable-accessibility/config.lua
 share/mudlet/lua/generic-mapper/versions.lua
 share/mudlet/lua/geyser/Geyser.lua
