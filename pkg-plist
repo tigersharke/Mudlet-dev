@@ -400,6 +400,7 @@ share/mudlet/tests/MXP_spec.lua
 share/mudlet/tests/Mapper_spec.lua
 share/mudlet/tests/Miscallaneous_spec.lua
 share/mudlet/tests/MudletBusted_spec.lua
+share/mudlet/tests/Networking_spec.lua
 share/mudlet/tests/Other_spec.lua
 share/mudlet/tests/Regex_spec.lua
 share/mudlet/tests/StringUtils_spec.lua
