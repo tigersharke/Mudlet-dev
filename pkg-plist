@@ -410,6 +410,7 @@ share/mudlet/tests/MudletBusted_spec.lua
 share/mudlet/tests/Networking_spec.lua
 share/mudlet/tests/Other_spec.lua
 share/mudlet/tests/Regex_spec.lua
+share/mudlet/tests/Spawn_spec.lua
 share/mudlet/tests/StringUtils_spec.lua
 share/mudlet/tests/TBufferOSC_spec.lua
 share/mudlet/tests/TableUtils_spec.lua
