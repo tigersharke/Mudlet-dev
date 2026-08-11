@@ -82,9 +82,6 @@ share/mudlet/lua/Other.lua
 share/mudlet/lua/StringUtils.lua
 share/mudlet/lua/TTSValues.lua
 share/mudlet/lua/TableUtils.lua
-share/mudlet/lua/base-ui/config.lua
-share/mudlet/lua/enable-accessibility/config.lua
-share/mudlet/lua/generic-mapper/versions.lua
 share/mudlet/lua/geyser/Geyser.lua
 share/mudlet/lua/geyser/GeyserAdjustableContainer.lua
 share/mudlet/lua/geyser/GeyserButton.lua
@@ -387,16 +384,21 @@ share/mudlet/tests/Alias_spec.lua
 share/mudlet/tests/DB_spec.lua
 share/mudlet/tests/DateTime_spec.lua
 share/mudlet/tests/DebugTools_spec.lua
+share/mudlet/tests/Discord_spec.lua
 share/mudlet/tests/GMCP_spec.lua
 share/mudlet/tests/GUIUtils_spec.lua
 share/mudlet/tests/GeyserAdjustableContainer_spec.lua
 share/mudlet/tests/GeyserButton_spec.lua
+share/mudlet/tests/GeyserCommandLine_spec.lua
 share/mudlet/tests/GeyserContainer_spec.lua
 share/mudlet/tests/GeyserGauge_spec.lua
 share/mudlet/tests/GeyserHBox_spec.lua
 share/mudlet/tests/GeyserLabel_spec.lua
+share/mudlet/tests/GeyserMapper_spec.lua
 share/mudlet/tests/GeyserMiniConsole_spec.lua
+share/mudlet/tests/GeyserScrollBox_spec.lua
 share/mudlet/tests/GeyserStyleSheet_spec.lua
+share/mudlet/tests/GeyserUserWindow_spec.lua
 share/mudlet/tests/GeyserVBox_spec.lua
 share/mudlet/tests/GeyserWindow_spec.lua
 share/mudlet/tests/IDManager_spec.lua
@@ -409,6 +411,7 @@ share/mudlet/tests/Miscallaneous_spec.lua
 share/mudlet/tests/MudletBusted_spec.lua
 share/mudlet/tests/Networking_spec.lua
 share/mudlet/tests/Other_spec.lua
+share/mudlet/tests/Package_spec.lua
 share/mudlet/tests/Regex_spec.lua
 share/mudlet/tests/Spawn_spec.lua
 share/mudlet/tests/StringUtils_spec.lua
@@ -417,5 +420,23 @@ share/mudlet/tests/TableUtils_spec.lua
 share/mudlet/tests/TextEdit_spec.lua
 share/mudlet/tests/Trigger_spec.lua
 share/mudlet/tests/UI_spec.lua
-@dir share/mudlet/lua/gui-drop
-@dir share/mudlet/lua/stressinator
+share/mudlet/tests/fixtures/packages/mudlet-spec-emptyarchive.mpackage
+share/mudlet/tests/fixtures/packages/mudlet-spec-minimal.mpackage
+share/mudlet/tests/fixtures/packages/mudlet-spec-module.mpackage
+share/mudlet/tests/fixtures/packages/mudlet-spec-noconfig.mpackage
+share/mudlet/tests/fixtures/packages/mudlet-spec-notazip.mpackage
+share/mudlet/tests/fixtures/packages/mudlet-spec-resources.mpackage
+share/mudlet/tests/fixtures/packages/mudlet-spec-selfuninstall.mpackage
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-emptyarchive/readme.txt
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-minimal/config.lua
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-minimal/mudlet-spec-minimal.xml
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-module/config.lua
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-module/mudlet-spec-module.xml
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-noconfig/mudlet-spec-noconfig.xml
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-resources/config.lua
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-resources/mudlet-spec-resources.xml
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-resources/resources/nested/spec-nested.txt
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-resources/resources/spec-note.txt
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-selfuninstall/config.lua
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-selfuninstall/mudlet-spec-selfuninstall.xml
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-xmlonly/mudlet-spec-xmlonly.xml
