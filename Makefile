@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=		Mudlet
-DISTVERSION=	g20260806
+DISTVERSION=	g20260822
 CATEGORIES=		games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -21,6 +21,7 @@ BUILD_DEPENDS= 	luarocks54:devel/lua-luarocks@lua54\
 				${LOCALBASE}/lib/lua/5.1/bit.so:devel/lua-bitop@lua51 \
 				${LOCALBASE}/share/hunspell/en_US.aff:textproc/en-hunspell \
 				${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools 
+#devel/py-tapi
 
 LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 				libqt6keychain.so:security/qtkeychain \
@@ -38,15 +39,16 @@ RUN_DEPENDS=	curl:ftp/curl \
 				${LOCALBASE}/lib/libboost_atomic.so:devel/boost-libs
 
 ### uses block ##------------------------------------------------------------------------------------------
-USES=			lua:51 cmake:noninja gmake sqlite qt:6 desktop-file-utils gl pkgconfig
+USES=			lua:51 cmake ninja sqlite qt:6 desktop-file-utils gl pkgconfig gettext localbase:ldflags
 
 USE_GITHUB=		nodefaults
 GH_ACCOUNT=		Mudlet
-GH_TAGNAME=		f07e50708be55817520374bde71add96a1cb0335
+GH_TAGNAME=		a7cf7a2dbb929dd8b310491e38c86c4d446fec7d
 GH_TUPLE= \
-				Mudlet:edbee-lib:a3ae51bbb82158366b3d5c4030a54981db688892:edbee_lib/3rdparty/edbee-lib \
+				Mudlet:edbee-lib:9a9155146870af4bba80502f34c446a3a68f42e8:edbee_lib/3rdparty/edbee-lib \
 				martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
 				julian-go:qt-tags-widget:26f177cbcebe66fdc3e8daed4d0984a7f60f3431:qt_tags_widget/3rdparty/qt-tags-widget
+
  
 USE_GL=			gl opengl glu
 USE_QT=			base 5compat multimedia tools speech
@@ -54,13 +56,14 @@ USE_QT=			base 5compat multimedia tools speech
 # USES=cmake related variables ##--------------------------------------------------------------------------
 CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="${LOCALBASE}" \
 				-DQt6Keychain_DIR=${LOCALBASE}/lib/cmake/Qt6Keychain \
-				-DCMAKE_AUTORCC=ON \
-				-DCMAKE_AUTOMOC=OFF \
-				-DCMAKE_AUTOUIC=OFF \
 				-DQT_DEBUG_FIND_PACKAGE=ON \
 				-DCMAKE_BUILD_TYPE=DEBUG \
-				--debug-output \
-				-DCMAKE_OUTSOURCE=OFF
+				-DCMAKE_FIND_DEBUG_MODE=true \
+				--debug-output
+#				-DCMAKE_OUTSOURCE=OFF
+#				-DCMAKE_AUTORCC=ON \
+#				-DCMAKE_AUTOMOC=OFF \
+#				-DCMAKE_AUTOUIC=ON \
 
 ### Make block ##------------------------------------------------------------------------------------------
 #
