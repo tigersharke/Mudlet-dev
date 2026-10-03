@@ -136,39 +136,10 @@ pre-build:
 #	${CP} -R ${STAGEDIR}${LOCALBASE}/lib/lua/5.4/* ${LOCALBASE}/lib/lua/5.4/
 	${CP} -R ${STAGEDIR}${LOCALBASE}/lib/lua/5.1/* ${LOCALBASE}/lib/lua/5.1/
 
-#post-build:
-#	@${ECHO_MSG} "==> Forcing translation resource rebuild..."
-#	@${RM} -f ${WRKDIR}/.build/translations/translated/*.qm \
-#		${WRKDIR}/.build/translations/translated/qm.qrc
-#	@${RM} -rf ${WRKDIR}/.build/src/CMakeFiles/mudlet_core.dir \
-#		${WRKDIR}/.build/src/libmudlet_core.a
-#	@${SETENV} ${CONFIGURE_ENV} ${CMAKE_BIN} -S${WRKSRC} -B${WRKDIR}/.build ${CMAKE_ARGS}
-#	@${MAKE_CMD} -C ${WRKDIR}/.build mudlet_core
-#	@${MAKE_CMD} -C ${WRKDIR}/.build mudlet
-
 post-stage:
-#	@${ECHO_MSG} "==> Installing Mudlet Lua framework (with patches)..."
-#	@${MKDIR} ${STAGEDIR}${PREFIX}/share/mudlet/lua
-#	@${MKDIR} ${STAGEDIR}${PREFIX}/share/mudlet/lua/geyser
-#	@${MKDIR} ${STAGEDIR}${PREFIX}/share/mudlet/translations
-# Force copy of all Lua files from the build tree
-#	@${CP} -Rp ${WRKDIR}/.build/src/mudlet-lua/lua/* \
-#		${STAGEDIR}${PREFIX}/share/mudlet/lua/ 2>/dev/null || true
-# Loose .qm files (important fallback)
-#	@${CP} -p ${WRKDIR}/.build/translations/translated/*.qm \
-#		${STAGEDIR}${PREFIX}/share/mudlet/translations/ 2>/dev/null || true
-#	@${ECHO_MSG} "Installed Lua files and translations"
-#	@${LS} ${STAGEDIR}${PREFIX}/share/mudlet/lua/Other.lua \
-#		${STAGEDIR}${PREFIX}/share/mudlet/lua/geyser/GeyserAdjustableContainer.lua 2>/dev/null || true
-#	@${LS} ${STAGEDIR}${PREFIX}/share/mudlet/translations/ | ${HEAD} -10
-#
-# The .qm files themselves do NOT go into ${STAGEDIR} (they are embedded)
-# Optional: Verify embedding
 	@${ECHO_MSG} "Checking embedded translations..."
 	@strings ${STAGEDIR}${PREFIX}/bin/mudlet 2>/dev/null | ${GREP} -E ':/lang/mudlet_.*\.qm' \
 	|| ${ECHO_MSG} "WARNING: No embedded .qm resources found!"
-
-# It took 8-12 hours of effort with repeated building testing and modifying, with help from Grok to cure the UI problem.
 
 #----------------------------------------------------------------------
 
