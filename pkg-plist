@@ -386,8 +386,10 @@ share/mudlet/lua/utf8_filenames.lua
 share/mudlet/tests/Actions_spec.lua
 share/mudlet/tests/AddonCommand_spec.lua
 share/mudlet/tests/Alias_spec.lua
+share/mudlet/tests/BeforeMapWidget_spec.lua
 share/mudlet/tests/BufferManipFuzz_spec.lua
 share/mudlet/tests/CommandLine_spec.lua
+share/mudlet/tests/ConsoleClearByName_spec.lua
 share/mudlet/tests/ConsoleClipboardByName_spec.lua
 share/mudlet/tests/ConsoleCursorByName_spec.lua
 share/mudlet/tests/ConsoleCursorPastLineEnd_spec.lua
