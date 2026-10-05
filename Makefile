@@ -60,6 +60,9 @@ USE_QT=		base 5compat multimedia tools speech
 CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="${LOCALBASE}" \
 				-DQtKeychain_DIR=${LOCALBASE}/lib/cmake/Qt6Keychain
 
+# Mudlet CMakeLists.txt has both CMAKE_SKIP_INSTALL_RPATH and CMAKE_SKIP_RPATH but FreeBSD ports system
+# handles this properly, do not use either.
+#
 ### Make block ##------------------------------------------------------------------------------------------
 #
 # conflicts ##-------------------------------------------------------------------------------------------
@@ -70,23 +73,27 @@ CONFLICTS=		Mudlet mudlet
 ### packaging list block ##--------------------------------------------------------------------------------
 #
 ### options definitions ##---------------------------------------------------------------------------------
-OPTIONS_DEFINE=		SENTRY_DEBUG 3D_MAPPER DEBUG FONTS MEM_TRACK HOT_RELOAD VAR_SPLASH SENTRY STATIC_ANALYSIS \
-			SKIP_INSTALL_RPATH SKIP_RPATH
-OPTIONS_DEFAULT=	FONTS 3D_MAPPER VAR_SPLASH
+OPTIONS_DEFAULT=		FONTS HOT_RELOAD 3D_MAPPER VAR_SPLASH
+OPTIONS_GROUP=			PLAYER OPTION DEVEL
+OPTIONS_GROUP_PLAYER=	3D_MAPPER FONTS HOT_RELOAD
+OPTIONS_GROUP_DEVEL=		SENTRY SENTRY_DEBUG STATIC_ANALYSIS
+OPTIONS_GROUP_OPTION=	VAR_SPLASH
+
 
 #
 ### options descriptions ##--------------------------------------------------------------------------------
+PLAYER_DESC=	Player needs
+OPTION_DESC=			Optional
+DEVEL_DESC=			Developer only settings
 3D_MAPPER_DESC=			Include optional 3D mapper
 DEBUG_DESC=			Set debug build type, cmake and qt debug verbosity
 FONTS_DESC=			Include optional fonts
 HOT_RELOAD_DESC=		Include optional shader hot-reloading
-MEM_TRACK_DESC=			Include optional memory tracking
-SENTRY_DEBUG_DESC=		Send debug files to Sentry after build
-SENTRY_DESC=			Enable crash reporting via Sentry (token needed) *missing subdirs*
-SKIP_INSTALL_RPATH_DESC=	runtime paths are not added when installing shared libraries, but are added when building
-SKIP_RPATH_DESC=		runtime paths are not added when using shared libraries
-STATIC_ANALYSIS_DESC=		Enable static analysis with clang-tidy and cppcheck
-VAR_SPLASH_DESC=		Include optional build-type splash screen
+MEM_TRACK_DESC=			Include optional memory tracking / introspection (experimental)
+SENTRY_DEBUG_DESC=		Send debug files to Sentry after build (requires SENTRY_AUTH_TOKEN)
+SENTRY_DESC=			Enable crash reporting via Sentry (requires SENTRY_DSN)
+STATIC_ANALYSIS_DESC=		Enable static analysis with clang-tidy and cppcheck *VERY SLOW / LONG*
+VAR_SPLASH_DESC=		Include build-type splash screen
 
 #
 ### options helpers ##-------------------------------------------------------------------------------------
@@ -102,8 +109,6 @@ MEM_TRACK_CMAKE_BOOL=		USE_MEMORY_TRACKING
 SENTRY_CMAKE_BOOL= 		WITH_SENTRY
 SENTRY_DEBUG_IMPLIES=		SENTRY
 SENTRY_DEBUG_CMAKE_BOOL=	SENTRY_SEND_DEBUG
-SKIP_INSTALL_RPATH_CMAKE_BOOL=	CMAKE_SKIP_INSTALL_RPATH
-SKIP_RPATH_CMAKE_BOOL=		CMAKE_SKIP_RPATH
 STATIC_ANALYSIS_CMAKE_BOOL=	ENABLE_STATIC_ANALYSIS
 VAR_SPLASH_CMAKE_BOOL=		USE_VARIABLE_SPLASH_SCREEN
 
@@ -111,6 +116,19 @@ VAR_SPLASH_CMAKE_BOOL=		USE_VARIABLE_SPLASH_SCREEN
 
 .if ${PORT_OPTIONS:MSENTRY}
 GH_TUPLE+=getsentry:sentry-native:a1827544e2da7e50517615003288c25380f8d457:sentry_native/3rdparty/sentry-native
+.endif
+
+# Pass SENTRY_DSN to CMake when it is provided (environment or make command line)
+.if defined(SENTRY_DSN) && !empty(SENTRY_DSN)
+CMAKE_ARGS+=	-DSENTRY_DSN:STRING="${SENTRY_DSN}"
+.endif
+
+# SENTRY_AUTH_TOKEN is used as an environment variable by the post-build upload script;
+# just make sure it is available when SENTRY_DEBUG is on.
+.if ${PORT_OPTIONS:MSENTRY_DEBUG}
+.  if defined(SENTRY_AUTH_TOKEN) && !empty(SENTRY_AUTH_TOKEN)
+MAKE_ENV+=	SENTRY_AUTH_TOKEN="${SENTRY_AUTH_TOKEN}"
+.  endif
 .endif
 
 .if ${PORT_OPTIONS:MSTATIC_ANALYSIS}
