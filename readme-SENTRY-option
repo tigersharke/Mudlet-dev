@@ -1,0 +1,11 @@
+Sentry is off by default and only useful for Mudlet devs.
+For:							Need:
+Crash reports appear in Sentry	WITH_SENTRY=ON + SENTRY_DSN=...
+Symbolicated stack traces		Also SENTRY_DEBUG=ON + SENTRY_AUTH_TOKEN=...
+
+enabling SENTRY requires a DSN, and SENTRY_DEBUG additionally requires an auth token.
+
+# Example when building the port
+make SENTRY_DSN="https://xxxxxxxx@oXXXX.ingest.sentry.io/XXXXXXX" \
+     SENTRY_AUTH_TOKEN="sntrys_xxxxxxxx" \
+     WITH=SENTRY,SENTRY_DEBUG
