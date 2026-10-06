@@ -494,6 +494,7 @@ share/mudlet/tests/fixtures/packages/mudlet-spec-resources.mpackage
 share/mudlet/tests/fixtures/packages/mudlet-spec-selfremove.mpackage
 share/mudlet/tests/fixtures/packages/mudlet-spec-selfremovemodule.mpackage
 share/mudlet/tests/fixtures/packages/mudlet-spec-selfuninstall.mpackage
+share/mudlet/tests/fixtures/packages/mudlet-spec-trickyconfig.mpackage
 share/mudlet/tests/fixtures/packages/mudlet-spec-varsonly.mpackage
 share/mudlet/tests/fixtures/packages/sources/mudlet-spec-badconfig/config.lua
 share/mudlet/tests/fixtures/packages/sources/mudlet-spec-badconfig/mudlet-spec-badconfig.xml
@@ -537,7 +538,10 @@ share/mudlet/tests/fixtures/packages/sources/mudlet-spec-selfremovemodule/config
 share/mudlet/tests/fixtures/packages/sources/mudlet-spec-selfremovemodule/mudlet-spec-selfremovemodule.xml
 share/mudlet/tests/fixtures/packages/sources/mudlet-spec-selfuninstall/config.lua
 share/mudlet/tests/fixtures/packages/sources/mudlet-spec-selfuninstall/mudlet-spec-selfuninstall.xml
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-trickyconfig/config.lua
+share/mudlet/tests/fixtures/packages/sources/mudlet-spec-trickyconfig/mudlet-spec-trickyconfig.xml
 share/mudlet/tests/fixtures/packages/sources/mudlet-spec-triggerkinds/mudlet-spec-triggerkinds.xml
 share/mudlet/tests/fixtures/packages/sources/mudlet-spec-varsonly/config.lua
 share/mudlet/tests/fixtures/packages/sources/mudlet-spec-varsonly/mudlet-spec-varsonly.xml
 share/mudlet/tests/fixtures/packages/sources/mudlet-spec-xmlonly/mudlet-spec-xmlonly.xml
+@dir share/mudlet/tests/fixtures/images
