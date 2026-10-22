@@ -48,9 +48,10 @@ USE_GITHUB=	nodefaults
 GH_ACCOUNT=	Mudlet
 GH_TAGNAME=	d48fd8ea9d9b31b8dfc1081004a5cc8f62027e36
 GH_TUPLE= \
-		Mudlet:edbee-lib:9a9155146870af4bba80502f34c446a3a68f42e8:edbee_lib/3rdparty/edbee-lib \
-		martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
-		julian-go:qt-tags-widget:26f177cbcebe66fdc3e8daed4d0984a7f60f3431:qt_tags_widget/3rdparty/qt-tags-widget
+		Mudlet:edbee-lib:64960cdf9:edbeelib/3rdparty/edbee-lib \
+		martin-eden:lua_code_formatter:4aa25029e:lua_code_formatter/3rdparty/lcf \
+		julian-go:qt-tags-widget:26f177cbc:qttagswidget/3rdparty/qt-tags-widget \
+		frankosterfeld:qtkeychain:875f77d9f:qtkeychain/3rdparty/qtkeychain
 
 USE_GL=		gl opengl glu
 USE_GNOME=	glib20
@@ -114,7 +115,15 @@ VAR_SPLASH_CMAKE_BOOL=		USE_VARIABLE_SPLASH_SCREEN
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MSENTRY}
-GH_TUPLE+=getsentry:sentry-native:a1827544e2da7e50517615003288c25380f8d457:sentry_native/3rdparty/sentry-native
+GH_TUPLE+=	getsentry:sentry-native:fb2a04d4a:sentrynative/3rdparty/sentry-native \
+		google:benchmark:48f5cc2:benchmark/3rdparty/sentry-native/external/benchmark \
+		getsentry:breakpad:25b6b72:breakpad/3rdparty/sentry-native/external/breakpad \
+		getsentry:crashpad:493151b:crashpad/3rdparty/sentry-native/external/crashpad \
+		getsentry:chromium-linux-syscall-support:9719c1e1:chromiumlinuxsyscallsupport/3rdparty/sentry-native/external/crashpad/third_party/lss/lss \
+		getsentry:mini_chromium:2f5c168f:mini_chromium/3rdparty/sentry-native/external/crashpad/third_party/mini_chromium/mini_chromium \
+		getsentry:chromium-zlib:fef58692:chromiumzlib/3rdparty/sentry-native/external/crashpad/third_party/zlib/zlib \
+		getsentry:libunwindstack-ndk:284202f:libunwindstackndk/3rdparty/sentry-native/external/libunwindstack-ndk \
+		getsentry:chromium-linux-syscall-support:ed31caa:chromiumlinuxsyscallsupport/3rdparty/sentry-native/external/third_party/lss
 .endif
 
 # Pass SENTRY_DSN to CMake when it is provided (environment or make command line)
@@ -134,6 +143,30 @@ MAKE_ENV+=	SENTRY_AUTH_TOKEN="${SENTRY_AUTH_TOKEN}"
 BUILD_DEPENDS+=	cppcheck:devel/cppcheck
 CMAKE_ARGS+= -DCLANG_TIDY_EXE="${LOCALBASE}/llvm${LLVM_DEFAULT}/bin/clang-tidy"
 .endif
+
+#--------------------------------------------------------------------
+# Maintainer helpers (unofficial -dev convenience)
+#--------------------------------------------------------------------
+# Print suggested GH_TUPLE for the currently pinned GH_TAGNAME
+x-update-tuples:
+	@command -v submodules2tuple >/dev/null 2>&1 || \
+	${ECHO_MSG} "Install ports-mgmt/submodules2tuple first"
+	@submodules2tuple -s -b ${GH_TAGNAME} \
+	https://github.com/${GH_ACCOUNT}/${GH_PROJECT}.git
+
+# List submodule paths + SHAs at GH_TAGNAME via GitHub API (no full recursive clone)
+x-list-submodule-shas:
+	@${FETCH_CMD} -qo - \
+	"https://api.github.com/repos/${GH_ACCOUNT}/${GH_PROJECT}/git/trees/${GH_TAGNAME}?recursive=1" \
+	| jq -r '.tree[] | select(.mode=="160000") | "\(.path)\t\(.sha)"'
+
+# Quick reminder of how to bump
+x-bump-help:
+	@${ECHO_MSG} "1. Set GH_TAGNAME=<new-commit>"
+	@${ECHO_MSG} "2. make x-update-tuples   # or x-list-submodule-shas"
+	@${ECHO_MSG} "3. Update GH_TUPLE hashes above"
+	@${ECHO_MSG} "4. make makesum"
+	@${ECHO_MSG} "5. make check-plist / test build"
 
 #
 #post-extract:
