@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=	Mudlet
-DISTVERSION=	g20261009
+DISTVERSION=	g20261021
 CATEGORIES=	games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -35,7 +35,9 @@ LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 		libminizip.so:archivers/minizip \
 		libsysinfo.so:devel/libsysinfo \
 		liblua-5.1.so:lang/lua51 \
-		libyajl.so:devel/yajl
+		libyajl.so:devel/yajl \
+		libonig.so:devel/oniguruma \
+		libQt6Svg.so:graphics/qt6-svg
 #
 RUN_DEPENDS=	curl:ftp/curl \
 		zstd:archivers/zstd \
@@ -46,16 +48,16 @@ USES=		lua:51 cmake ninja gnome sqlite qt:6 desktop-file-utils gl pkgconfig gett
 
 USE_GITHUB=	nodefaults
 GH_ACCOUNT=	Mudlet
-GH_TAGNAME=	d48fd8ea9d9b31b8dfc1081004a5cc8f62027e36
+GH_TAGNAME=	b8730d53416833485ede099833de27931b351d1b
 GH_TUPLE= \
-		Mudlet:edbee-lib:64960cdf9:edbeelib/3rdparty/edbee-lib \
-		martin-eden:lua_code_formatter:4aa25029e:lua_code_formatter/3rdparty/lcf \
-		julian-go:qt-tags-widget:26f177cbc:qttagswidget/3rdparty/qt-tags-widget \
-		frankosterfeld:qtkeychain:875f77d9f:qtkeychain/3rdparty/qtkeychain
+		Mudlet:edbee-lib:64960cdf988e6e758388cfc5fcb5542d845ad4be:edbeelib/3rdparty/edbee-lib \
+		martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
+		julian-go:qt-tags-widget:26f177cbcebe66fdc3e8daed4d0984a7f60f3431:qttagswidget/3rdparty/qt-tags-widget \
+		frankosterfeld:qtkeychain:875f77d9f61bd97fd84cca47ce3bc71186dfbd09:qtkeychain/3rdparty/qtkeychain
 
 USE_GL=		gl opengl glu
 USE_GNOME=	glib20
-USE_QT=		base 5compat multimedia tools speech
+USE_QT=		base 5compat multimedia tools speech svg
 
 # USES=cmake related variables ##--------------------------------------------------------------------------
 CMAKE_ARGS+=	-DCMAKE_INSTALL_PREFIX="${LOCALBASE}" \
@@ -149,10 +151,14 @@ CMAKE_ARGS+= -DCLANG_TIDY_EXE="${LOCALBASE}/llvm${LLVM_DEFAULT}/bin/clang-tidy"
 #--------------------------------------------------------------------
 # Print suggested GH_TUPLE for the currently pinned GH_TAGNAME
 x-update-tuples:
-	@command -v submodules2tuple >/dev/null 2>&1 || \
-	${ECHO_MSG} "Install ports-mgmt/submodules2tuple first"
-	@submodules2tuple -s -b ${GH_TAGNAME} \
-	https://github.com/${GH_ACCOUNT}/${GH_PROJECT}.git
+	@${ECHO_MSG} "NOTE: submodules2tuple -b expects a branch/tag, not a raw commit."
+	@${ECHO_MSG} "For GH_TAGNAME=${GH_TAGNAME} use:  make x-list-submodule-shas"
+	@${ECHO_MSG} "Or run: submodules2tuple -v -b development https://github.com/${GH_ACCOUNT}/${GH_PROJECT}.git"
+	@if ! command -v submodules2tuple >/dev/null 2>&1; then \
+		${ECHO_MSG} "Install: pkg install ports-mgmt/submodules2tuple"; exit 1; \
+	fi
+	@submodules2tuple -v -b development \
+		https://github.com/${GH_ACCOUNT}/${GH_PROJECT}.git
 
 # List submodule paths + SHAs at GH_TAGNAME via GitHub API (no full recursive clone)
 x-list-submodule-shas:
