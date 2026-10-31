@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=	Mudlet
-DISTVERSION=	g20261021
+DISTVERSION=	g20261028
 CATEGORIES=	games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -48,7 +48,7 @@ USES=		lua:51 cmake ninja gnome sqlite qt:6 desktop-file-utils gl pkgconfig gett
 
 USE_GITHUB=	nodefaults
 GH_ACCOUNT=	Mudlet
-GH_TAGNAME=	b8730d53416833485ede099833de27931b351d1b
+GH_TAGNAME=	718d011fb511b914768a6c4346166e35b57d628c
 GH_TUPLE= \
 		Mudlet:edbee-lib:64960cdf988e6e758388cfc5fcb5542d845ad4be:edbeelib/3rdparty/edbee-lib \
 		martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
@@ -117,7 +117,7 @@ VAR_SPLASH_CMAKE_BOOL=		USE_VARIABLE_SPLASH_SCREEN
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MSENTRY}
-GH_TUPLE+=	getsentry:sentry-native:fb2a04d4a:sentrynative/3rdparty/sentry-native \
+GH_TUPLE+=	getsentry:sentry-native:740313523edd50e3a0cfe2f8f931e893ed7423a5:sentrynative/3rdparty/sentry-native \
 		google:benchmark:48f5cc2:benchmark/3rdparty/sentry-native/external/benchmark \
 		getsentry:breakpad:25b6b72:breakpad/3rdparty/sentry-native/external/breakpad \
 		getsentry:crashpad:493151b:crashpad/3rdparty/sentry-native/external/crashpad \
