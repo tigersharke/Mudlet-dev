@@ -382,11 +382,14 @@ share/mudlet/lua/translations/translated/mudlet-lua_zh_CN.json
 share/mudlet/lua/translations/translated/mudlet-lua_zh_TW.json
 share/mudlet/lua/utf8_filenames.lua
 share/mudlet/tests/AFreshProfile_spec.lua
+share/mudlet/tests/AProfileStyleSheetReach_spec.lua
 share/mudlet/tests/Actions_spec.lua
 share/mudlet/tests/AddonCommand_spec.lua
 share/mudlet/tests/Alias_spec.lua
+share/mudlet/tests/ApiArgFuzz_spec.lua
 share/mudlet/tests/BeforeMapWidget_spec.lua
 share/mudlet/tests/BufferManipFuzz_spec.lua
+share/mudlet/tests/BufferTrimCursor_spec.lua
 share/mudlet/tests/CommandLine_spec.lua
 share/mudlet/tests/ConsoleClearByName_spec.lua
 share/mudlet/tests/ConsoleClipboardByName_spec.lua
@@ -394,9 +397,12 @@ share/mudlet/tests/ConsoleCursorByName_spec.lua
 share/mudlet/tests/ConsoleCursorPastLineEnd_spec.lua
 share/mudlet/tests/ConsoleEdges_spec.lua
 share/mudlet/tests/ConsoleFontsByName_spec.lua
+share/mudlet/tests/ConsoleHorizontalScroll_spec.lua
 share/mudlet/tests/ConsoleLinksByName_spec.lua
 share/mudlet/tests/ConsoleScrollByName_spec.lua
 share/mudlet/tests/ConsoleSelectionByName_spec.lua
+share/mudlet/tests/ConsoleSelectionStyle_spec.lua
+share/mudlet/tests/ConsoleSizeEvent_spec.lua
 share/mudlet/tests/ConsoleWrapByName_spec.lua
 share/mudlet/tests/ConsoleWrap_spec.lua
 share/mudlet/tests/CursorShapes_spec.lua
@@ -405,6 +411,7 @@ share/mudlet/tests/DateTime_spec.lua
 share/mudlet/tests/DebugTools_spec.lua
 share/mudlet/tests/Discord_spec.lua
 share/mudlet/tests/EchoLineFeeds_spec.lua
+share/mudlet/tests/EditorFont_spec.lua
 share/mudlet/tests/EmptyBufferOps_spec.lua
 share/mudlet/tests/EnableDisableByName_spec.lua
 share/mudlet/tests/GMCP_spec.lua
@@ -413,6 +420,7 @@ share/mudlet/tests/GenericMapperEditGate_spec.lua
 share/mudlet/tests/GenericMapperLabels_spec.lua
 share/mudlet/tests/GenericMapperLines_spec.lua
 share/mudlet/tests/GenericMapperMapLoad_spec.lua
+share/mudlet/tests/GenericMapperMapWindow_spec.lua
 share/mudlet/tests/GenericMapperMoves_spec.lua
 share/mudlet/tests/GenericMapperStartMapping_spec.lua
 share/mudlet/tests/GenericMapperSwedish_spec.lua
@@ -447,11 +455,14 @@ share/mudlet/tests/MainConsoleEcho_spec.lua
 share/mudlet/tests/MapEmptinessChecks_spec.lua
 share/mudlet/tests/MapEnvironmentKit_spec.lua
 share/mudlet/tests/MapFileAudit_spec.lua
+share/mudlet/tests/MapFileFuzz_spec.lua
 share/mudlet/tests/MapRoomTables_spec.lua
 share/mudlet/tests/MapStyle_spec.lua
 share/mudlet/tests/MapSymbolPrivateUse_spec.lua
+share/mudlet/tests/MapSymbolVariationSelector_spec.lua
 share/mudlet/tests/MapViewportLimits_spec.lua
 share/mudlet/tests/Mapper_spec.lua
+share/mudlet/tests/MatchesUnsetGroups_spec.lua
 share/mudlet/tests/Media_spec.lua
 share/mudlet/tests/Miscallaneous_spec.lua
 share/mudlet/tests/MoveCursorPastEnd_spec.lua
@@ -462,6 +473,7 @@ share/mudlet/tests/Networking_spec.lua
 share/mudlet/tests/Other_spec.lua
 share/mudlet/tests/Package_spec.lua
 share/mudlet/tests/ParentWindowChildren_spec.lua
+share/mudlet/tests/ProfileFocus_spec.lua
 share/mudlet/tests/Regex_spec.lua
 share/mudlet/tests/ReversedSelection_spec.lua
 share/mudlet/tests/RoomDB_spec.lua
@@ -490,6 +502,7 @@ share/mudlet/tests/WindowSize_spec.lua
 share/mudlet/tests/WindowVisible_spec.lua
 share/mudlet/tests/WrapIndentBounds_spec.lua
 share/mudlet/tests/WrapWidth_spec.lua
+share/mudlet/tests/XmlImportFuzz_spec.lua
 share/mudlet/tests/fixtures/archives/unzip-collide.zip
 share/mudlet/tests/fixtures/archives/unzip-corrupt.zip
 share/mudlet/tests/fixtures/archives/unzip-empty.zip
@@ -497,7 +510,11 @@ share/mudlet/tests/fixtures/archives/unzip-escape.zip
 share/mudlet/tests/fixtures/archives/unzip-large.zip
 share/mudlet/tests/fixtures/archives/unzip-long-name.zip
 share/mudlet/tests/fixtures/maps/achaea-map.zip
+share/mudlet/tests/fixtures/maps/build-cross-platform-map.lua
+share/mudlet/tests/fixtures/maps/cross-platform-map.dat
+share/mudlet/tests/fixtures/maps/cross-platform-map.json
 share/mudlet/tests/fixtures/maps/minimal-map.xml
+share/mudlet/tests/fixtures/maps/normalise-map-json.lua
 share/mudlet/tests/fixtures/maps/phantom-room-hashes.dat
 share/mudlet/tests/fixtures/maps/stale-label-keys.dat
 share/mudlet/tests/fixtures/packages/mudlet-spec-badconfig.mpackage

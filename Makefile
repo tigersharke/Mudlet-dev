@@ -1,6 +1,6 @@
 ### PORTNAME block ##--------------------------------------------------------------------------------------
 PORTNAME=	Mudlet
-DISTVERSION=	g20261030
+DISTVERSION=	g20261117
 CATEGORIES=	games
 MASTER_SITES=	GH
 PKGNAMESUFFIX=	-dev
@@ -37,23 +37,30 @@ LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 		liblua-5.1.so:lang/lua51 \
 		libyajl.so:devel/yajl \
 		libonig.so:devel/oniguruma \
-		libQt6Svg.so:graphics/qt6-svg
+		libQt6Svg.so:graphics/qt6-svg \
+		libQt6HttpServer.so:www/qt6-httpserver
 #
 RUN_DEPENDS=	curl:ftp/curl \
 		zstd:archivers/zstd \
 		${LOCALBASE}/lib/libboost_atomic.so:devel/boost-libs
+
+EDB=		64960cdf988e6e758388cfc5fcb5542d845ad4be
+LCF=		4aa25029eae867840e6c06c7b075f4b690dd2ec2
+QTT=		26f177cbcebe66fdc3e8daed4d0984a7f60f3431
+QTK=		e86bc3cbb50b172be61ed857803a372412b6ad85
+SEN=		7afc37457d7fcc37fb0bace9c8045d3fa687717f
 
 ### uses block ##------------------------------------------------------------------------------------------
 USES=		lua:51 cmake ninja gnome sqlite qt:6 desktop-file-utils gl pkgconfig gettext-runtime localbase:ldflags
 
 USE_GITHUB=	nodefaults
 GH_ACCOUNT=	Mudlet
-GH_TAGNAME=	364c90431f62dfa550f92477dbb723591ca7d736
+GH_TAGNAME=	6d49337bb0a76b6488bb11a810b21cbde1d33f92
 GH_TUPLE= \
-		Mudlet:edbee-lib:64960cdf988e6e758388cfc5fcb5542d845ad4be:edbeelib/3rdparty/edbee-lib \
-		martin-eden:lua_code_formatter:4aa25029eae867840e6c06c7b075f4b690dd2ec2:lua_code_formatter/3rdparty/lcf \
-		julian-go:qt-tags-widget:26f177cbcebe66fdc3e8daed4d0984a7f60f3431:qttagswidget/3rdparty/qt-tags-widget \
-		frankosterfeld:qtkeychain:875f77d9f61bd97fd84cca47ce3bc71186dfbd09:qtkeychain/3rdparty/qtkeychain
+		Mudlet:edbee-lib:${EDB}:edbeelib/3rdparty/edbee-lib \
+		martin-eden:lua_code_formatter:${LCF}:lua_code_formatter/3rdparty/lcf \
+		julian-go:qt-tags-widget:${QTT}:qttagswidget/3rdparty/qt-tags-widget \
+		frankosterfeld:qtkeychain:${QTK}:qtkeychain/3rdparty/qtkeychain
 
 USE_GL=		gl opengl glu
 USE_GNOME=	glib20
@@ -117,7 +124,7 @@ VAR_SPLASH_CMAKE_BOOL=		USE_VARIABLE_SPLASH_SCREEN
 .include <bsd.port.options.mk>
 
 .if ${PORT_OPTIONS:MSENTRY}
-GH_TUPLE+=	getsentry:sentry-native:740313523edd50e3a0cfe2f8f931e893ed7423a5:sentrynative/3rdparty/sentry-native \
+GH_TUPLE+=	getsentry:sentry-native:${SEN}:sentrynative/3rdparty/sentry-native \
 		google:benchmark:48f5cc2:benchmark/3rdparty/sentry-native/external/benchmark \
 		getsentry:breakpad:25b6b72:breakpad/3rdparty/sentry-native/external/breakpad \
 		getsentry:crashpad:493151b:crashpad/3rdparty/sentry-native/external/crashpad \

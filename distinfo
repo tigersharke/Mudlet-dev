@@ -1,11 +1,11 @@
-TIMESTAMP = 1793435225
-SHA256 (Mudlet-dev/Mudlet-Mudlet-g20261030-364c90431f62dfa550f92477dbb723591ca7d736_GH0.tar.gz) = fe0f3a20e4966eaf3fd7cd6e11c50aa834a2bf09ee11f758a7940b2c3d350152
-SIZE (Mudlet-dev/Mudlet-Mudlet-g20261030-364c90431f62dfa550f92477dbb723591ca7d736_GH0.tar.gz) = 49941599
+TIMESTAMP = 1795075811
+SHA256 (Mudlet-dev/Mudlet-Mudlet-g20261117-6d49337bb0a76b6488bb11a810b21cbde1d33f92_GH0.tar.gz) = 6521aadfb0b7fd9214c7c01eb480102bde23afaba57319d355e2b97284097301
+SIZE (Mudlet-dev/Mudlet-Mudlet-g20261117-6d49337bb0a76b6488bb11a810b21cbde1d33f92_GH0.tar.gz) = 51373698
 SHA256 (Mudlet-dev/Mudlet-edbee-lib-64960cdf988e6e758388cfc5fcb5542d845ad4be_GH0.tar.gz) = aaa61defd676a6ac5847ca3d5321a7df1a15709f1390c6662b8026b3ecee5058
 SIZE (Mudlet-dev/Mudlet-edbee-lib-64960cdf988e6e758388cfc5fcb5542d845ad4be_GH0.tar.gz) = 960770
 SHA256 (Mudlet-dev/martin-eden-lua_code_formatter-4aa25029eae867840e6c06c7b075f4b690dd2ec2_GH0.tar.gz) = de444abeb948ed7f9dfd9e4eb927ec9667e972d549b31a6ab4f07d117879dd9d
 SIZE (Mudlet-dev/martin-eden-lua_code_formatter-4aa25029eae867840e6c06c7b075f4b690dd2ec2_GH0.tar.gz) = 55738
 SHA256 (Mudlet-dev/julian-go-qt-tags-widget-26f177cbcebe66fdc3e8daed4d0984a7f60f3431_GH0.tar.gz) = ed6f7b46f5857c3b6cd54224093e34bf4b8943a1b202ae222236fc5a38be2bea
 SIZE (Mudlet-dev/julian-go-qt-tags-widget-26f177cbcebe66fdc3e8daed4d0984a7f60f3431_GH0.tar.gz) = 86377
-SHA256 (Mudlet-dev/frankosterfeld-qtkeychain-875f77d9f61bd97fd84cca47ce3bc71186dfbd09_GH0.tar.gz) = f367072fdf43551104cc718e43056d218d0c6d81c1b1758603fb3cd87144f8cc
-SIZE (Mudlet-dev/frankosterfeld-qtkeychain-875f77d9f61bd97fd84cca47ce3bc71186dfbd09_GH0.tar.gz) = 69660
+SHA256 (Mudlet-dev/frankosterfeld-qtkeychain-e86bc3cbb50b172be61ed857803a372412b6ad85_GH0.tar.gz) = a3364fe6b33b6272fc451788b44186e15b866d7afee42d67a5052df02de05ec2
+SIZE (Mudlet-dev/frankosterfeld-qtkeychain-e86bc3cbb50b172be61ed857803a372412b6ad85_GH0.tar.gz) = 71167
