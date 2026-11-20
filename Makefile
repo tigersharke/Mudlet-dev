@@ -21,7 +21,8 @@ BUILD_DEPENDS= 	git:devel/git \
 		luarocks54:devel/lua-luarocks@lua54 \
 		${LOCALBASE}/lib/lua/5.1/bit.so:devel/lua-bitop@lua51 \
 		${LOCALBASE}/share/hunspell/en_US.aff:textproc/en-hunspell \
-		${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools
+		${LOCALBASE}/lib/qt6/libQt6UiTools.so:devel/qt6-tools \
+		${LOCALBASE}/lib/lua/5.1/luasql/sqlite3.so:databases/luasql-sqlite3
 #
 LIB_DEPENDS=	libassimp.so:multimedia/assimp \
 		libqt6keychain.so:security/qtkeychain@qt6 \
@@ -85,13 +86,13 @@ CONFLICTS=		Mudlet mudlet
 ### options definitions ##---------------------------------------------------------------------------------
 OPTIONS_DEFAULT=		FONTS HOT_RELOAD 3D_MAPPER VAR_SPLASH
 OPTIONS_GROUP=			PLAYER OPTION DEVEL
-OPTIONS_GROUP_PLAYER=	3D_MAPPER FONTS HOT_RELOAD
+OPTIONS_GROUP_PLAYER=		3D_MAPPER FONTS HOT_RELOAD
 OPTIONS_GROUP_DEVEL=		SENTRY SENTRY_DEBUG STATIC_ANALYSIS
-OPTIONS_GROUP_OPTION=	VAR_SPLASH
+OPTIONS_GROUP_OPTION=		VAR_SPLASH
 
 #
 ### options descriptions ##--------------------------------------------------------------------------------
-PLAYER_DESC=	Player needs
+PLAYER_DESC=			Player needs
 OPTION_DESC=			Optional
 DEVEL_DESC=			Developer only settings
 3D_MAPPER_DESC=			Include optional 3D mapper
